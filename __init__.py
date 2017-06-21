@@ -17,6 +17,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content.lower().startswith('!hello'):
-        await client.delete_message('Hello World')
+        await client.send_message(message.channel, 'Hello World')
 
 client.run(config.get('DiscordConfig', 'UserToken'))
