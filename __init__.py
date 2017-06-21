@@ -3,6 +3,10 @@ import asyncio
 import datetime
 import subprocess
 import random
+import configparser
+
+config = configparser.RawConfigParser()
+config.read('Config.cfg')
 
 client = discord.Client()
 
@@ -15,5 +19,4 @@ async def on_message(message):
     if message.content.lower().startswith('!hello'):
         await client.delete_message('Hello World')
 
-#TODO: set this up
-#client.run('MzI2NDE5NTY2ODkwODQ0MTYy.DCmifA.VDn19q6vu9mTzkL6bv34JUjfbeg')
+client.run(config.get('DiscordConfig', 'UserToken'))
