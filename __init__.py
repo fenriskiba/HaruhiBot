@@ -10,6 +10,13 @@ config.read('Config.cfg')
 
 client = discord.Client()
 
+my_commands = {}
+
+
+def register(cmd):
+    my_commands[cmd.__name__] = cmd
+    return cmd
+
 
 @client.event
 async def on_ready():
@@ -18,13 +25,15 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    call = 'await hello(message)'
-    await exec(call)
+    print(message.content.lower())
+    func_name = my_commands.get(message.content.lower()[1:])
+    if func_name:
+        await func_name(message)
 
 
+@register
 async def hello(message):
-    if message.content.lower().startswith('!hello'):
-        await client.send_message(message.channel, 'Hello World')
+    await client.send_message(message.channel, 'Hello World')
 
 
 client.run(config.get('DiscordConfig', 'UserToken'))
