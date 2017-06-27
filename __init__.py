@@ -1,15 +1,13 @@
-import discord
-import asyncio
-import datetime
-import subprocess
-import random
 import configparser
+import discord
 
+# Import Configurations
 config = configparser.RawConfigParser()
 config.read('Config.cfg')
 
 client = discord.Client()
 
+# Establish List that functions can be registered to
 my_commands = {}
 
 
@@ -26,14 +24,22 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if message.content.lower().startswith('!'):
-        func_name = my_commands.get(message.content.lower()[1:].partition(' ')[0])
-        if func_name:
-            await func_name(message)
+        func_name = message.content.lower()[1:].partition(' ')[0]
+        func = my_commands.get(func_name)
+        if func:
+            await func(message)
 
 
 @register
 async def hello(message):
     await client.send_message(message.channel, 'Hello World')
+
+
+@register
+async def echo(message):
+    msg = message.content.split(' ', 1)[1]
+    await client.send_message(message.channel, msg)
+    await client.delete_message(message)
 
 
 client.run(config.get('DiscordConfig', 'UserToken'))
