@@ -25,10 +25,10 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print(message.content.lower())
-    func_name = my_commands.get(message.content.lower()[1:])
-    if func_name:
-        await func_name(message)
+    if message.content.lower().startswith('!'):
+        func_name = my_commands.get(message.content.lower()[1:].partition(' ')[0])
+        if func_name:
+            await func_name(message)
 
 
 @register
