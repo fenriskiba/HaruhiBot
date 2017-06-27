@@ -102,3 +102,6 @@ ENV/
 
 # HaruhiiBot
 *.cfg
+
+#PyCharm
+.idea/*
