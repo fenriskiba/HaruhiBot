@@ -1,7 +1,9 @@
 import configparser
 import discord
 
-from settings import my_commands, register
+import modules.simple_commands
+
+from modules.settings import my_commands
 
 # Import Configurations
 config = configparser.RawConfigParser()
@@ -21,22 +23,6 @@ async def on_message(message):
         func_name = message.content.lower()[1:].partition(' ')[0]
         func = my_commands.get(func_name)
         if func:
-            await func(message)
-
-
-# TODO: Move to new file
-@register
-async def hello(message):
-    await client.send_message(message.channel, 'Hello World')
-
-
-@register
-async def echo(message):
-    msg = message.content.split(' ', 1)[1]
-    await client.send_message(message.channel, msg)
-    await client.delete_message(message)
-
-# TODO: Create Pray/Fortune Functionality
-
+            await func(client, message)
 
 client.run(config.get('DiscordConfig', 'UserToken'))
