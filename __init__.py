@@ -1,20 +1,13 @@
 import configparser
 import discord
 
+from settings import my_commands, register
+
 # Import Configurations
 config = configparser.RawConfigParser()
 config.read('Config.cfg')
 
 client = discord.Client()
-
-# TODO: Move to new file
-# Establish List that functions can be registered to
-my_commands = {}
-
-
-def register(cmd):
-    my_commands[cmd.__name__] = cmd
-    return cmd
 
 
 @client.event
