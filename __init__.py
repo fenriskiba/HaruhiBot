@@ -7,6 +7,7 @@ config.read('Config.cfg')
 
 client = discord.Client()
 
+# TODO: Move to new file
 # Establish List that functions can be registered to
 my_commands = {}
 
@@ -30,6 +31,7 @@ async def on_message(message):
             await func(message)
 
 
+# TODO: Move to new file
 @register
 async def hello(message):
     await client.send_message(message.channel, 'Hello World')
@@ -40,6 +42,8 @@ async def echo(message):
     msg = message.content.split(' ', 1)[1]
     await client.send_message(message.channel, msg)
     await client.delete_message(message)
+
+# TODO: Create Pray/Fortune Functionality
 
 
 client.run(config.get('DiscordConfig', 'UserToken'))
