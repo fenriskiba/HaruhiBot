@@ -11,6 +11,3 @@ async def echo(client, message):
     msg = message.content.split(' ', 1)[1]
     await client.send_message(message.channel, msg)
     await client.delete_message(message)
-
-
-# TODO: Create Pray/Fortune Functionality
